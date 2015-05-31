@@ -82,7 +82,7 @@ Test your deployment:
 ###The /app folder
 
 Apache is configured to serve the files from the `/app` folder, which is a symbolic
-link to `/var/www/html`. In osx-docker-apache-php, the apache user `www-data` 
+link to `/srv/www/html`. In osx-docker-apache-php, the apache user `www-data` 
 has full write permissions to the `app` folder.
 
 ###Apache

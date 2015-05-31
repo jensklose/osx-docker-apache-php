@@ -1,9 +1,10 @@
 FROM phusion/baseimage:latest
-MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
+MAINTAINER Jens Klose <jens.klose@mazehall.com>
 
-# based on dgraziotin/docker-osx-lamp
-# MAINTAINER Fernando Mayo <fernando@tutum.co>, Feng Honglin <hfeng@tutum.co>
-ENV DOCKER_USER_ID 501 
+# based on
+# dgraziotin/docker-osx-lamp MAINTAINER Fernando Mayo <fernando@tutum.co>, Feng Honglin <hfeng@tutum.co>
+# dgraziotin/apache-php MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
+ENV DOCKER_USER_ID 501
 ENV DOCKER_USER_GID 20
 
 ENV BOOT2DOCKER_ID 1000
@@ -19,7 +20,8 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-  apt-get -y install supervisor wget git apache2 libapache2-mod-php5 php5-mysql pwgen php-apc php5-mcrypt zip unzip  && \
+  apt-get -y install supervisor wget git apache2 libapache2-mod-php5 \
+  php5-curl php5-mysql pwgen php-apc php5-mcrypt zip unzip  && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # needed for phpMyAdmin
@@ -36,7 +38,8 @@ ADD apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
 # Configure /app folder with sample app
-RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
+RUN mkdir -p /srv/www
+RUN mkdir -p /app && ln -s /app /srv/www
 ADD app/ /app
 
 #Environment variables to configure php

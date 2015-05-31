@@ -1,7 +1,7 @@
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
 
-        DocumentRoot /var/www/html
+        DocumentRoot /srv/www/html
         <Directory />
                 Options Indexes FollowSymLinks MultiViews
                 # To make wordpress .htaccess work
@@ -9,23 +9,7 @@
                 Order allow,deny
                 allow from all
         </Directory>
-        <Directory /var/www/html>
-                Options Indexes FollowSymLinks MultiViews
-                # To make wordpress .htaccess work
-                AllowOverride All
-                Order allow,deny
-                allow from all
-        </Directory>
-
-        Alias /phpmyadmin /var/www/phpmyadmin
-        <Directory /phpmyadmin>
-                Options Indexes FollowSymLinks MultiViews
-                # To make wordpress .htaccess work
-                AllowOverride All
-                Order allow,deny
-                allow from all
-        </Directory>
-        <Directory /var/www/phpmyadmin>
+        <Directory /srv/www/html>
                 Options Indexes FollowSymLinks MultiViews
                 # To make wordpress .htaccess work
                 AllowOverride All
