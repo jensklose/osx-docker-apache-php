@@ -4,9 +4,6 @@ MAINTAINER Jens Klose <jens.klose@mazehall.com>
 # based on
 # dgraziotin/docker-osx-lamp MAINTAINER Fernando Mayo <fernando@tutum.co>, Feng Honglin <hfeng@tutum.co>
 # dgraziotin/apache-php MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
-ENV DOCKER_USER_ID 501
-ENV DOCKER_USER_GID 20
-
 ENV BOOT2DOCKER_ID 1000
 ENV BOOT2DOCKER_GID 50
 
@@ -37,17 +34,16 @@ ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
+ENV DOCROOT "/srv/www"
 # Configure /app folder with sample app
-RUN mkdir -p /srv/www
-RUN mkdir -p /app && ln -s /app /srv/www
-ADD app/ /app
+RUN mkdir -p $DOCROOT
 
 #Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 
 # Add volumes for the app and MySql
-VOLUME  ["/app" ]
+VOLUME  ["$DOCROOT" ]
 
 EXPOSE 80
 CMD ["/run.sh"]

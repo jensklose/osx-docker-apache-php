@@ -5,17 +5,6 @@ sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILE
 
 sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=staff/" /etc/apache2/envvars
 
-if [ -n "$VAGRANT_OSX_MODE" ];then
-    usermod -u $DOCKER_USER_ID www-data
-    groupmod -g $(($DOCKER_USER_GID + 10000)) $(getent group $DOCKER_USER_GID | cut -d: -f1)
-    groupmod -g ${DOCKER_USER_GID} staff
-   # Tweaks to give Apache/PHP write permissions to the app
-    chown -R www-data:staff /srv/www
-    chown -R www-data:staff /app
-else
-    # Tweaks to give Apache/PHP write permissions to the app
-    chown -R www-data:staff /srv/www
-    chown -R www-data:staff /app
-fi
+usermod -u $(ls -ldn . | awk '{print $3}') www-data
 
 exec supervisord -n
