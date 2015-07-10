@@ -18,7 +18,7 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
   apt-get -y install supervisor wget git apache2 libapache2-mod-php5 \
-  php5-curl php5-mysql pwgen php-apc php5-mcrypt zip unzip  && \
+  php5-curl php5-gd php5-mysql pwgen php-apc php5-mcrypt zip unzip  && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # needed for phpMyAdmin
